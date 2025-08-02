@@ -1,9 +1,9 @@
 const path = require('path')
 module.exports = {
-  version: "3.7",
-  title: "<TITLE>",
-  description: "",
-  icon: "<ICON>",
+  version: "1.0.0",
+  title: "Audio Flamingo 3",
+  description: "NVIDIA's Audio Flamingo 3 - Large Audio-Language Model for speech, sound, and music understanding with Gradio web interface",
+  icon: "icon.png",
   menu: async (kernel, info) => {
     let installed = info.exists("env")
     let running = {
