@@ -5,7 +5,7 @@ module.exports = {
   description: "NVIDIA's Audio Flamingo 3 - Large Audio-Language Model for speech, sound, and music understanding with Gradio web interface",
   icon: "icon.png",
   menu: async (kernel, info) => {
-    let installed = info.exists("env")
+    let installed = info.exists("app/env")
     let running = {
       install: info.running("install.js"),
       start: info.running("start.js"),
