@@ -91,9 +91,9 @@
 - [x] Fixed requirements.txt dependency versions
 - [x] Fixed CUDA version documentation (changed from 12.8 to 12.4)
 - [x] Removed Windows Triton configuration for stability
+- [x] Fixed reset directory path (now removes entire app/ directory)
+- [x] Fixed update git pull context (now runs in app/ directory)
 - [ ] Fix platform-specific DeepSpeed installation
-- [ ] Fix reset directory path
-- [ ] Fix update git pull context
 - [ ] Add comprehensive error handling
 - [ ] Improve URL detection regex
 - [ ] Add dependency verification steps
