@@ -26,10 +26,21 @@ module.exports = {
       params: {
         venv: "env",                // Edit this to customize the venv folder path
         path: "app",                // Run commands in the cloned app directory
-        message: [
-          "uv pip install https://github.com/6Morpheus6/deepspeed-windows-wheels/releases/download/v0.17.5/deepspeed-0.17.5+e1560d84-cp310-cp310-win_amd64.whl",
-          "uv pip install -r requirements.txt"
-        ],
+        message: {
+          win32: [
+            "uv pip install https://github.com/6Morpheus6/deepspeed-windows-wheels/releases/download/v0.17.5/deepspeed-0.17.5+e1560d84-cp310-cp310-win_amd64.whl",
+            "findstr /v /i deepspeed requirements.txt > requirements_no_deepspeed.txt",
+            "uv pip install -r requirements_no_deepspeed.txt"
+          ],
+          darwin: [
+            "grep -v 'deepspeed' requirements.txt > requirements_no_deepspeed.txt",
+            "uv pip install -r requirements_no_deepspeed.txt"
+          ],
+          linux: [
+            "grep -v 'deepspeed' requirements.txt > requirements_no_deepspeed.txt",
+            "uv pip install -r requirements_no_deepspeed.txt"
+          ]
+        },
       }
     },
   ]
