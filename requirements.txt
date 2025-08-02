@@ -3,6 +3,7 @@ hydra-core
 loguru
 Pillow
 pydub
+gradio
 # Transformers and training utilities
 transformers==4.46.0
 pytorchvideo==0.1.5
