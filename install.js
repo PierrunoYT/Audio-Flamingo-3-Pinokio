@@ -21,16 +21,32 @@ module.exports = {
         }
       }
     },
-    // Edit this step with your custom install commands
+    // Install DeepSpeed - Windows needs special wheel, Linux/macOS use pip
+    {
+      when: "{{platform === 'win32'}}",
+      method: "shell.run",
+      params: {
+        venv: "env",
+        path: "app",
+        message: "uv pip install https://github.com/6Morpheus6/deepspeed-windows-wheels/releases/download/v0.17.5/deepspeed-0.17.5+e1560d84-cp310-cp310-win_amd64.whl"
+      }
+    },
+    {
+      when: "{{platform !== 'win32'}}",
+      method: "shell.run",
+      params: {
+        venv: "env",
+        path: "app",
+        message: "uv pip install deepspeed"
+      }
+    },
+    // Install other requirements
     {
       method: "shell.run",
       params: {
-        venv: "env",                // Edit this to customize the venv folder path
-        path: "app",                // Run commands in the cloned app directory
-        message: [
-          "uv pip install https://github.com/6Morpheus6/deepspeed-windows-wheels/releases/download/v0.17.5/deepspeed-0.17.5+e1560d84-cp310-cp310-win_amd64.whl",
-          "uv pip install -r ../requirements.txt"
-        ],
+        venv: "env",
+        path: "app",
+        message: "uv pip install -r ../requirements.txt"
       }
     },
   ]
