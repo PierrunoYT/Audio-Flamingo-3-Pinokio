@@ -22,7 +22,7 @@
 ### Installation Process
 - [x] HuggingFace Space cloning from nvidia/audio-flamingo-3
 - [x] App directory creation with cloned space
-- [x] PyTorch 2.7.0 installation with GPU detection and CUDA 12.8
+- [x] PyTorch 2.7.0 installation with GPU detection and CUDA 12.4
 - [x] Audio Flamingo 3 dependencies (gradio>=4.0.0, transformers>=4.46.0, peft>=0.14.0)
 - [x] Virtual environment setup with UV package manager
 - [x] Model download using `hf download` command (~15GB)
@@ -47,7 +47,7 @@
 - [x] UV package manager for fast installations
 
 ### GPU Support
-- [x] NVIDIA CUDA 12.8 detection and installation
+- [x] NVIDIA CUDA 12.4 detection and installation
 - [x] AMD DirectML (Windows) / ROCm 6.2.4 (Linux)
 - [x] CPU fallback option with optimizations
 - [x] Automatic precision selection (FP16/FP32)
@@ -107,12 +107,12 @@
 9. **Test Deduplication**: Verify link.js saves disk space correctly
 
 ### Platform Testing
-- [ ] Windows 10/11 with NVIDIA GPU (CUDA 12.8 + XFormers + Triton)
+- [ ] Windows 10/11 with NVIDIA GPU (CUDA 12.4 + XFormers)
 - [ ] Windows 10/11 with AMD GPU (DirectML)
 - [ ] Windows 10/11 CPU-only
 - [ ] macOS Intel (CPU + Metal)
 - [ ] macOS Apple Silicon (CPU + Metal)
-- [ ] Ubuntu Linux with NVIDIA (CUDA 12.8 + XFormers + SageAttention)
+- [ ] Ubuntu Linux with NVIDIA (CUDA 12.4 + XFormers + SageAttention)
 - [ ] Ubuntu Linux with AMD (ROCm 6.2.4)
 - [ ] Ubuntu Linux CPU-only
 
@@ -177,7 +177,7 @@ The Audio Flamingo 3 Pinokio package is complete and ready for use. All core fun
 ### Key Features in This Version
 - **Audio Intelligence**: NVIDIA's Audio Flamingo 3 LALM for speech, sound, and music
 - **HuggingFace Space Integration**: Clones from nvidia/audio-flamingo-3 space
-- **Latest PyTorch**: 2.7.0 with CUDA 12.8 support
+- **Latest PyTorch**: 2.7.0 with CUDA 12.4 support
 - **Advanced Optimizations**: XFormers, Triton, SageAttention support
 - **UV Package Manager**: Lightning-fast dependency installation
 - **Enhanced GPU Support**: Better AMD and NVIDIA acceleration for audio models

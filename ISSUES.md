@@ -89,6 +89,8 @@
 ## Status
 
 - [x] Fixed requirements.txt dependency versions
+- [x] Fixed CUDA version documentation (changed from 12.8 to 12.4)
+- [x] Removed Windows Triton configuration for stability
 - [ ] Fix platform-specific DeepSpeed installation
 - [ ] Fix reset directory path
 - [ ] Fix update git pull context

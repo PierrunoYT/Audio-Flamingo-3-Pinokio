@@ -20,7 +20,7 @@ The package includes these core files:
 
 The installation process:
 1. Clones the Audio Flamingo 3 HuggingFace Space from nvidia/audio-flamingo-3 to app/ directory
-2. Installs PyTorch with platform-specific optimizations (CUDA 12.8, DirectML, ROCm)
+2. Installs PyTorch with platform-specific optimizations (CUDA 12.4, DirectML, ROCm)
 3. Installs DeepSpeed Windows wheel for enhanced performance
 4. Installs dependencies from custom requirements.txt (gradio, transformers>=4.46.0, accelerate, peft, etc.)
 5. Sets up virtual environment in app/env/ with all dependencies
@@ -90,9 +90,9 @@ For the Pinokio package, distribute these files:
 ### 7. Technical Details
 
 **PyTorch Installation:**
-- Windows NVIDIA: CUDA 12.8 + XFormers + Triton + SageAttention
+- Windows NVIDIA: CUDA 12.4 + XFormers
 - Windows AMD: DirectML support
-- Linux NVIDIA: CUDA 12.8 + XFormers + SageAttention
+- Linux NVIDIA: CUDA 12.4 + XFormers + SageAttention
 - Linux AMD: ROCm 6.2.4 support
 - macOS: CPU + Metal acceleration
 - CPU fallback: Optimized CPU-only installation

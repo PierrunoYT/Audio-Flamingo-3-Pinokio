@@ -89,7 +89,7 @@ Audio-Flamingo-3-Pinokio/
 - **Precision**: FP16 on GPU, FP32 on CPU
 
 ### Dependencies
-- PyTorch 2.7.0+ with CUDA 12.8 support
+- PyTorch 2.7.0+ with CUDA 12.4 support
 - Transformers 4.46.0+
 - Gradio 4.0.0+
 - Accelerate, PEFT 0.14.0+
@@ -99,8 +99,8 @@ Audio-Flamingo-3-Pinokio/
 
 | Platform | NVIDIA | AMD | CPU |
 |----------|--------|-----|-----|
-| Windows | CUDA 12.8 + XFormers + Triton | DirectML | CPU-only |
-| Linux | CUDA 12.8 + XFormers + SageAttention | ROCm 6.2.4 | CPU-only |
+| Windows | CUDA 12.4 + XFormers | DirectML | CPU-only |
+| Linux | CUDA 12.4 + XFormers + SageAttention | ROCm 6.2.4 | CPU-only |
 | macOS | N/A | N/A | CPU + Metal |
 
 ## 🚨 Troubleshooting

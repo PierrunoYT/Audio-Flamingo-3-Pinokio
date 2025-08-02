@@ -26,7 +26,7 @@ The Pinokio installer will:
 
 1. **Clone Repository**: Downloads the Audio Flamingo 3 HuggingFace Space to app/ directory
 2. **Install Dependencies**: Uses custom requirements.txt from root directory for controlled dependency management
-3. **Install PyTorch**: Platform and GPU-specific PyTorch installation with CUDA 12.8
+3. **Install PyTorch**: Platform and GPU-specific PyTorch installation with CUDA 12.4
 4. **Install DeepSpeed**: Windows-optimized DeepSpeed wheel for enhanced performance
 5. **Setup Environment**: Creates virtual environment with all dependencies in app/env/
 6. **Model Download**: Downloads NVIDIA's audio-flamingo-3 model automatically during first run
@@ -47,11 +47,11 @@ The Pinokio installer will:
 - **Linux**: Ubuntu/Debian and other distributions with CUDA/ROCm support
 
 ### GPU Optimization
-- **NVIDIA CUDA**: Automatic detection and installation of CUDA 12.8 with XFormers
+- **NVIDIA CUDA**: Automatic detection and installation of CUDA 12.4 with XFormers
 - **AMD Support**: DirectML on Windows, ROCm 6.2.4 on Linux
 - **CPU Fallback**: Graceful fallback to CPU-only mode with optimizations
 - **Memory Management**: Automatic FP16/FP32 precision selection
-- **Advanced Optimizations**: Optional Triton (Windows) and SageAttention support
+- **Advanced Optimizations**: Optional Triton (Linux) and SageAttention support
 
 ### Audio Intelligence Features
 - **Audio Flamingo 3 Model**: NVIDIA's Large Audio-Language Model for audio understanding
@@ -152,8 +152,8 @@ The application uses NVIDIA's Audio Flamingo 3 model:
 
 | Platform | NVIDIA | AMD | CPU |
 |----------|--------|-----|-----|
-| Windows | CUDA 12.8 + XFormers + Triton | DirectML | CPU-only |
-| Linux | CUDA 12.8 + XFormers + SageAttention | ROCm 6.2.4 | CPU-only |
+| Windows | CUDA 12.4 + XFormers | DirectML | CPU-only |
+| Linux | CUDA 12.4 + XFormers + SageAttention | ROCm 6.2.4 | CPU-only |
 | macOS | N/A | N/A | CPU + Metal |
 
 ## Version History
