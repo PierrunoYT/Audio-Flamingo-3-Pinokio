@@ -2,7 +2,7 @@
 
 ## Package Structure
 
-This Pinokio package clones the Audio Flamingo 3 HuggingFace Space and installs all dependencies automatically. The Audio Flamingo 3 model downloads automatically during installation.
+This Pinokio package clones the Audio Flamingo 3 HuggingFace Space and installs dependencies using a custom requirements.txt for better compatibility. The Audio Flamingo 3 model downloads automatically during first run.
 
 ### 1. Package Files ✅ Complete
 
@@ -19,12 +19,12 @@ The package includes these core files:
 ### 2. Installation Process
 
 The installation process:
-1. Clones the Audio Flamingo 3 HuggingFace Space from nvidia/audio-flamingo-3
-2. Creates `app/` directory with the cloned space
-3. Installs Audio Flamingo 3 dependencies (gradio>=4.0.0, transformers>=4.46.0, peft>=0.14.0)
-4. Installs PyTorch 2.7.0 with GPU support (CUDA 12.8, DirectML, ROCm)
-5. Downloads NVIDIA's audio-flamingo-3 model (~15GB) using `hf download`
-6. Sets up virtual environment with all dependencies
+1. Clones the Audio Flamingo 3 HuggingFace Space from nvidia/audio-flamingo-3 to app/ directory
+2. Installs PyTorch with platform-specific optimizations (CUDA 12.8, DirectML, ROCm)
+3. Installs DeepSpeed Windows wheel for enhanced performance
+4. Installs dependencies from custom requirements.txt (gradio, transformers>=4.46.0, accelerate, peft, etc.)
+5. Sets up virtual environment in app/env/ with all dependencies
+6. NVIDIA's audio-flamingo-3 model (~15GB) downloads automatically during first run
 7. Creates installation completion marker
 
 ### 3. HuggingFace Space Integration
@@ -63,18 +63,22 @@ For the Pinokio package, distribute these files:
 1. User installs the Pinokio package (files above)
 2. When they click "Install", it:
    - Clones the HuggingFace Space to `app/` directory
-   - Installs Audio Flamingo 3 dependencies using UV package manager
    - Installs PyTorch with platform-specific optimizations
-   - Downloads the nvidia/audio-flamingo-3 model (~15GB)
+   - Installs DeepSpeed Windows wheel for performance
+   - Installs dependencies from custom requirements.txt using UV package manager
+   - Creates virtual environment in app/env/
    - Verifies the installation
 3. User can then start the application through Pinokio interface
-4. Gradio web interface becomes available for audio interaction
-5. Users can upload audio files and interact with the Audio Flamingo 3 model
+4. Model downloads automatically during first startup (~15GB)
+5. Gradio web interface becomes available for audio interaction
+6. Users can upload audio files and interact with the Audio Flamingo 3 model
 
 ### 6. Key Features
 
-- **HuggingFace Space Integration**: Always gets latest code from NVIDIA's official space
+- **HuggingFace Space Integration**: Gets latest code from NVIDIA's official space
+- **Custom Dependencies**: Uses curated requirements.txt for better compatibility
 - **Fast Installation**: Uses UV package manager for lightning-fast dependency installation
+- **DeepSpeed Integration**: Windows-optimized DeepSpeed wheel for enhanced performance
 - **GPU Optimization**: Supports NVIDIA CUDA, AMD DirectML/ROCm, and CPU fallback
 - **Cross-Platform**: Windows, macOS, and Linux support
 - **Advanced Features**: XFormers, Triton, and SageAttention optimizations

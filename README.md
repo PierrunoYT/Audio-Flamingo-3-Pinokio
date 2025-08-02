@@ -29,7 +29,7 @@ A complete Pinokio installation package for running NVIDIA's Audio Flamingo 3 lo
 2. Open Pinokio and navigate to "Discover"
 3. Search for "Audio Flamingo 3" or paste this repository URL:
    ```
-   https://github.com/your-username/Audio-Flamingo-3-Pinokio
+   https://github.com/PierrunoYT/Audio-Flamingo-3-Pinokio
    ```
 4. Click "Install" and wait for the installation to complete
 5. Click "Start" to launch Audio Flamingo 3
@@ -39,7 +39,7 @@ A complete Pinokio installation package for running NVIDIA's Audio Flamingo 3 lo
 
 1. Clone this repository:
    ```bash
-   git clone https://github.com/your-username/Audio-Flamingo-3-Pinokio.git
+   git clone https://github.com/PierrunoYT/Audio-Flamingo-3-Pinokio.git
    cd Audio-Flamingo-3-Pinokio
    ```
 
@@ -68,15 +68,14 @@ Audio-Flamingo-3-Pinokio/
 ├── reset.js                # Reset/cleanup workflow
 ├── link.js                 # Deduplication workflow
 ├── torch.js                # PyTorch installation
+├── app.py                  # Main Gradio application
+├── requirements.txt        # Python dependencies
 ├── icon.png                # Project icon
 ├── README.md               # This file
-├── .gitignore              # Git ignore rules
 └── app/                    # Created during installation
     ├── env/                # Python virtual environment
-    ├── app.py              # Main Gradio application
-    ├── models/             # Downloaded model files
-    │   └── audio-flamingo-3/
-    └── requirements.txt    # Python dependencies
+    └── models/             # Downloaded model files
+        └── audio-flamingo-3/
 ```
 
 ## 🔧 Technical Details

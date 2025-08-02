@@ -6,7 +6,7 @@ This directory contains a complete Pinokio installer package for Audio Flamingo 
 
 ### Core Pinokio Files
 - **`pinokio.js`** - Main configuration and dynamic menu system
-- **`install.js`** - Complete installation workflow that clones from HuggingFace Spaces
+- **`install.js`** - Complete installation workflow that clones from HuggingFace Spaces and uses custom requirements
 - **`start.js`** - Application startup script with port management and audio model monitoring
 - **`torch.js`** - Cross-platform PyTorch installation with latest optimizations
 - **`update.js`** - Update workflow for package and dependencies
@@ -24,12 +24,13 @@ This directory contains a complete Pinokio installer package for Audio Flamingo 
 
 The Pinokio installer will:
 
-1. **Clone Repository**: Downloads the Audio Flamingo 3 HuggingFace Space
-2. **Install Dependencies**: Installs gradio, transformers, accelerate, peft, and supporting packages
-3. **Install PyTorch**: Platform and GPU-specific PyTorch 2.7.0 installation with CUDA 12.8
-4. **Setup Environment**: Creates virtual environment with all dependencies
-5. **Model Download**: Downloads NVIDIA's audio-flamingo-3 model (~15GB)
-6. **Verification**: Tests all components for proper installation
+1. **Clone Repository**: Downloads the Audio Flamingo 3 HuggingFace Space to app/ directory
+2. **Install Dependencies**: Uses custom requirements.txt from root directory for controlled dependency management
+3. **Install PyTorch**: Platform and GPU-specific PyTorch installation with CUDA 12.8
+4. **Install DeepSpeed**: Windows-optimized DeepSpeed wheel for enhanced performance
+5. **Setup Environment**: Creates virtual environment with all dependencies in app/env/
+6. **Model Download**: Downloads NVIDIA's audio-flamingo-3 model automatically during first run
+7. **Verification**: Tests all components for proper installation
 
 ## Features
 
@@ -131,14 +132,16 @@ The application uses NVIDIA's Audio Flamingo 3 model:
 
 ### Virtual Environment
 - Isolated Python environment in `app/env/`
-- All dependencies installed within virtual environment
+- All dependencies installed within virtual environment using custom requirements.txt
 - No conflicts with system Python installation
+- Uses UV package manager for fast installation
 
 ### Model Management
-- Audio Flamingo 3 model downloaded automatically during installation
-- Cached locally in `app/models/audio-flamingo-3/`
-- Approximately 15GB download during setup
+- Audio Flamingo 3 model downloaded automatically during first run
+- Cached locally using HuggingFace cache system
+- Approximately 15GB download during first startup
 - Uses HuggingFace transformers and PEFT libraries
+- Custom requirements ensure compatibility
 
 ### Port Management
 - Automatic port detection and assignment
