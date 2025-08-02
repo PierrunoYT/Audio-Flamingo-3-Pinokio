@@ -6,10 +6,10 @@ pydub
 gradio
 # Transformers and training utilities
 transformers==4.46.0
-pytorchvideo==0.1.5
+pytorchvideo==0.1.6
 accelerate==0.34.2
 numpy==1.26.4
-opencv-python-headless==4.8.0.76
+opencv-python-headless==4.10.0.84
 matplotlib
 
 # Audio
@@ -17,7 +17,7 @@ soundfile
 librosa
 openai-whisper
 ftfy
-ffmpeg
+ffmpeg-python
 jiwer
 einops
 wandb
@@ -25,5 +25,5 @@ kaldiio
 peft==0.14.0
 
 # Compatibility fix
-protobuf==3.20.*
+protobuf>=4.25.0,<5.0.0
 
