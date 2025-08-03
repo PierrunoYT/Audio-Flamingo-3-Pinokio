@@ -4,7 +4,7 @@ module.exports = {
     {
       method: "shell.run",
       params: {
-        message: "git clone https://huggingface.co/spaces/nvidia/audio-flamingo-3 app"
+        message: "git clone https://huggingface.co/spaces/PierrunoYT/audio-flamingo-3 app"
       }
     },
     // Delete this step if your project does not use torch
