@@ -5,11 +5,11 @@ pydub
 gradio
 
 # Transformers and training utilities
-transformers
-pytorchvideo
-accelerate
-numpy
-opencv-python-headless
+transformers==4.46.0
+pytorchvideo==0.1.5
+accelerate==0.34.2
+numpy==1.26.4
+opencv-python-headless==4.8.0.76
 matplotlib
 
 # Audio
@@ -22,7 +22,7 @@ jiwer
 einops
 wandb
 kaldiio
-peft
+peft==0.14.0
 
 # Compatibility fix
- protobuf
+protobuf==3.20.*
