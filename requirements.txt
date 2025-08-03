@@ -6,7 +6,6 @@ pydub
 # Transformers and training utilities
 transformers
 pytorchvideo
-deepspeed
 accelerate
 numpy
 opencv-python-headless
