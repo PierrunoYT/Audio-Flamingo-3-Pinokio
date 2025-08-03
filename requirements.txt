@@ -26,4 +26,3 @@ peft
 
 # Compatibility fix
 protobuf
-triton
