@@ -2,6 +2,7 @@ hydra-core
 loguru
 Pillow
 pydub
+gradio
 
 # Transformers and training utilities
 transformers
