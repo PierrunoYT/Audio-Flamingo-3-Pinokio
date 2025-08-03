@@ -25,4 +25,4 @@ kaldiio
 peft
 
 # Compatibility fix
-protobuf
+ protobuf
