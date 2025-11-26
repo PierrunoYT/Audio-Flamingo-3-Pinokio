@@ -16,7 +16,7 @@ module.exports = {
           venv: "env",                // Edit this to customize the venv folder path
           path: "app",                // Use same path as main install to ensure single environment
           // xformers: true   // uncomment this line if your project requires xformers
-          triton: true,   // Enable triton-windows for Windows (torch.js handles platform-specific installation)
+          // triton: true   // Triton disabled on Windows for stability (use on Linux only)
           // sageattention: true   // uncomment this line if your project requires sageattention
         }
       }
