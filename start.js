@@ -7,11 +7,7 @@ module.exports = {
       params: {
         venv: "env",                // Edit this to customize the venv folder path
         path: "app",                // Run from the cloned app directory
-        env: {
-          "DS_BUILD_OPS": "0",      // Disable DeepSpeed CUDA ops compilation on Windows
-          "DS_BUILD_AIO": "0",      // Disable DeepSpeed async I/O (not available on Windows)
-          "DS_BUILD_FUSED_ADAM": "0" // Disable fused Adam optimizer compilation
-        },                          // Edit this to customize environment variables (see documentation)
+        env: { },                   // Edit this to customize environment variables (see documentation)
         message: [
           "python app.py",    // Edit with your custom commands
         ],
