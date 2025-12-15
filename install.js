@@ -28,9 +28,10 @@ module.exports = {
       params: {
         venv: "env",
         path: "app",
-        message: "uv pip install https://github.com/6Morpheus6/deepspeed-windows-wheels/releases/download/v0.17.5/deepspeed-0.17.5+e1560d84-2.8torch+cu128-cp310-cp310-win_amd64.whl"
+        message: "uv pip install https://github.com/6Morpheus6/deepspeed-windows-wheels/releases/download/v0.17.5/deepspeed-0.17.5+e1560d84-2.7torch+cu128-cp310-cp310-win_amd64.whl"
       }
     },
+    // Install DeepSpeed for non-Windows platforms
     {
       when: "{{platform !== 'win32'}}",
       method: "shell.run",
