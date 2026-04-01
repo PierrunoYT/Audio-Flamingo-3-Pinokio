@@ -7,8 +7,9 @@ module.exports = {
   }, {
     method: "shell.run",
     params: {
-      path: "app",
-      message: "git pull"
+      venv: "env",
+      path: ".",
+      message: "uv pip install -r requirements.txt --upgrade"
     }
   }]
 }
