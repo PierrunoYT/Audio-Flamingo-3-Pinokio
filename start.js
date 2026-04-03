@@ -5,22 +5,24 @@ module.exports = {
       method: "shell.run",
       params: {
         venv: "env",
-        path: ".",
-        env: { },
+        path: "app",
+        env: {
+          GRADIO_SERVER_PORT: "{{port}}",
+        },
         message: [
           "python app.py",
         ],
         on: [{
-          "event": "/http:\\/\\/[^\\s\\/]+:\\d{2,5}(?=[^\\w]|$)/",
-          "done": true
-        }]
-      }
+          event: "/(http:\\/\\/[0-9.:]+)/",
+          done: true,
+        }],
+      },
     },
     {
       method: "local.set",
       params: {
-        url: "{{input.event[0]}}"
-      }
+        url: "{{input.event[1]}}",
+      },
     },
-  ]
+  ],
 }

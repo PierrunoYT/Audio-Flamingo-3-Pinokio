@@ -239,4 +239,5 @@ that advances reasoning and understanding across speech, sound, and music.
 # Launch App
 # -----------------------
 if __name__ == "__main__":
-    demo.launch(server_name="0.0.0.0", server_port=7860, share=False)
+    _port = int(os.environ.get("GRADIO_SERVER_PORT", os.environ.get("PORT", "7860")))
+    demo.launch(server_name="127.0.0.1", server_port=_port, share=False)
