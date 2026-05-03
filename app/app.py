@@ -30,7 +30,7 @@ model_think = AudioFlamingo3ForConditionalGeneration.from_pretrained(
 )
 non_lora_path = os.path.join(think_dir, "non_lora_trainables.bin")
 if os.path.exists(non_lora_path):
-    non_lora_trainables = torch.load(non_lora_path, map_location="cpu")
+    non_lora_trainables = torch.load(non_lora_path, map_location="cpu", weights_only=False)
     model_think.load_state_dict(non_lora_trainables, strict=False)
     model_think = PeftModel.from_pretrained(model_think, local_path, subfolder="think")
     print("Think model loaded successfully.")
@@ -133,9 +133,6 @@ def transcribe_infer(audio_file):
 # ---------------------------------
 with gr.Blocks(
     title="Audio Flamingo 3",
-    css="""
-    .gradio-container { max-width: 1200px !important; margin: auto !important; }
-    """,
 ) as demo:
 
     gr.Markdown(
@@ -240,4 +237,9 @@ that advances reasoning and understanding across speech, sound, and music.
 # -----------------------
 if __name__ == "__main__":
     _port = int(os.environ.get("GRADIO_SERVER_PORT", os.environ.get("PORT", "7860")))
-    demo.launch(server_name="127.0.0.1", server_port=_port, share=False)
+    demo.launch(
+        server_name="127.0.0.1",
+        server_port=_port,
+        share=False,
+        css=".gradio-container { max-width: 1200px !important; margin: auto !important; }",
+    )
