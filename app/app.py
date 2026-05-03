@@ -11,7 +11,7 @@ from peft import PeftModel
 # ---------------------------------
 MODEL_ID = "nvidia/audio-flamingo-3-hf"
 device = "cuda" if torch.cuda.is_available() else "cpu"
-dtype = torch.float16 if device == "cuda" else torch.float32
+dtype = torch.bfloat16 if device == "cuda" else torch.float32
 
 print(f"Loading Audio Flamingo 3 on {device}...")
 
@@ -65,7 +65,7 @@ def single_turn_infer(audio_file, prompt_text):
             tokenize=True,
             add_generation_prompt=True,
             return_dict=True,
-        ).to(model_single.device)
+        ).to(model_single.device, dtype=model_single.dtype)
 
         outputs = model_single.generate(**inputs, max_new_tokens=500)
         decoded = processor.batch_decode(
@@ -98,7 +98,7 @@ def think_infer(audio_file, prompt_text):
             tokenize=True,
             add_generation_prompt=True,
             return_dict=True,
-        ).to(model_think.device)
+        ).to(model_think.device, dtype=model_think.dtype)
 
         outputs = model_think.generate(**inputs, max_new_tokens=1024)
         decoded = processor.batch_decode(
@@ -115,7 +115,7 @@ def transcribe_infer(audio_file):
 
     try:
         inputs = processor.apply_transcription_request(audio=audio_file).to(
-            model_single.device
+            model_single.device, dtype=model_single.dtype
         )
         outputs = model_single.generate(**inputs, max_new_tokens=500)
         decoded = processor.batch_decode(
