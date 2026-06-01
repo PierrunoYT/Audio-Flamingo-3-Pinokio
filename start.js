@@ -5,11 +5,12 @@ module.exports = {
       method: "shell.run",
       params: {
         venv: "env",
+        path: "app",
         env: {
           GRADIO_SERVER_PORT: "{{port}}",
         },
         message: [
-          "python app/app.py",
+          "python app.py",
         ],
         on: [{
           event: "/(http:\\/\\/[0-9.:]+)/",

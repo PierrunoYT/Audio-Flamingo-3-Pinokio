@@ -11,14 +11,5 @@ module.exports = {
       path: "app",
       message: "uv pip install -r requirements.txt --upgrade"
     }
-  }, {
-    method: "script.start",
-    params: {
-      uri: "torch.js",
-      params: {
-        venv: "env",
-        path: "app",
-      }
-    }
   }]
 }
