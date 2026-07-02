@@ -19,6 +19,12 @@
 
 - A capable **NVIDIA GPU** is recommended for practical use; CPU may run but will be slow.
 - Model use is subject to NVIDIA’s **non-commercial research** terms; see the About tab in the UI and the model card on Hugging Face.
+- If the model weights are gated on Hugging Face, run `huggingface-cli login` (or set the `HF_TOKEN` environment variable) inside the app's virtual environment before starting, otherwise model loading will fail on first run.
+
+## Windows notes
+
+- NVIDIA GPUs use the standard CUDA wheels; AMD GPUs fall back to `torch-directml`, which lags behind mainline PyTorch releases — if install fails on an AMD GPU, see the version-pinning note in [`torch.js`](torch.js).
+- No CPU-only fallback beyond the default `torch.js` CPU branch is provided; a 7B-parameter model will be very slow without a GPU.
 
 ## Programmatic access
 
