@@ -1,7 +1,7 @@
 import gradio as gr
 import torch
 import os
-import tempfile
+import sys
 from transformers import AudioFlamingo3ForConditionalGeneration, AutoProcessor
 from huggingface_hub import snapshot_download
 from peft import PeftModel
@@ -15,28 +15,38 @@ dtype = torch.bfloat16 if device == "cuda" else torch.float32
 
 print(f"Loading Audio Flamingo 3 on {device}...")
 
-processor = AutoProcessor.from_pretrained(MODEL_ID)
-model_single = AudioFlamingo3ForConditionalGeneration.from_pretrained(
-    MODEL_ID, torch_dtype=dtype, device_map="auto"
-)
+try:
+    processor = AutoProcessor.from_pretrained(MODEL_ID)
+    model_single = AudioFlamingo3ForConditionalGeneration.from_pretrained(
+        MODEL_ID, dtype=dtype, device_map="auto"
+    )
 
-# Load think model with LoRA adapters
-print("Loading Think model with LoRA adapters...")
-local_path = snapshot_download(MODEL_ID)
-think_dir = os.path.join(local_path, "think")
+    # Check for a Think LoRA adapter before loading a second full copy of the
+    # base model, so we don't double VRAM usage when there is nothing to attach.
+    print("Checking for Think LoRA adapter...")
+    local_path = snapshot_download(MODEL_ID)
+    think_dir = os.path.join(local_path, "think")
+    non_lora_path = os.path.join(think_dir, "non_lora_trainables.bin")
 
-model_think = AudioFlamingo3ForConditionalGeneration.from_pretrained(
-    MODEL_ID, torch_dtype=dtype, device_map="auto"
-)
-non_lora_path = os.path.join(think_dir, "non_lora_trainables.bin")
-if os.path.exists(non_lora_path):
-    non_lora_trainables = torch.load(non_lora_path, map_location="cpu", weights_only=False)
-    model_think.load_state_dict(non_lora_trainables, strict=False)
-    model_think = PeftModel.from_pretrained(model_think, local_path, subfolder="think")
-    print("Think model loaded successfully.")
-else:
-    print("Warning: Think LoRA weights not found, using base model for think mode.")
-    model_think = model_single
+    if os.path.exists(non_lora_path):
+        print("Loading Think model with LoRA adapters...")
+        model_think = AudioFlamingo3ForConditionalGeneration.from_pretrained(
+            MODEL_ID, dtype=dtype, device_map="auto"
+        )
+        non_lora_trainables = torch.load(non_lora_path, map_location="cpu", weights_only=True)
+        model_think.load_state_dict(non_lora_trainables, strict=False)
+        model_think = PeftModel.from_pretrained(model_think, local_path, subfolder="think")
+        print("Think model loaded successfully.")
+    else:
+        print("Warning: Think LoRA weights not found, using base model for think mode.")
+        model_think = model_single
+except Exception as e:
+    print(f"FATAL: Failed to load Audio Flamingo 3 model: {e}")
+    print(
+        "If this model is gated on Hugging Face, run 'huggingface-cli login' "
+        "(or set the HF_TOKEN environment variable) inside the app's env, then try again."
+    )
+    sys.exit(1)
 
 print("Models loaded successfully!")
 

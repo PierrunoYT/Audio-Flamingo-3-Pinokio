@@ -17,6 +17,12 @@ module.exports = {
       "next": null
     },
     // windows amd
+    // NOTE: torch-directml (Microsoft, maintenance mode) historically lags far
+    // behind mainline PyTorch releases and only supports specific older torch
+    // versions. torch/torchaudio/torchvision are left unpinned here because the
+    // exact currently-compatible versions are not confirmed; if install fails,
+    // check https://github.com/microsoft/DirectML for the torch version that
+    // matches the resolved torch-directml release and pin it explicitly.
     {
       "when": "{{platform === 'win32' && gpu === 'amd'}}",
       "method": "shell.run",

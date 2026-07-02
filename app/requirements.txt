@@ -6,6 +6,7 @@ transformers>=4.47.0
 accelerate
 huggingface_hub
 peft
+sentencepiece
 
 # Audio
 soundfile
