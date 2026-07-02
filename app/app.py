@@ -17,19 +17,21 @@ print(f"Loading Audio Flamingo 3 on {device}...")
 
 processor = AutoProcessor.from_pretrained(MODEL_ID)
 model_single = AudioFlamingo3ForConditionalGeneration.from_pretrained(
-    MODEL_ID, torch_dtype=dtype, device_map="auto"
+    MODEL_ID, dtype=dtype, device_map="auto"
 )
 
-# Load think model with LoRA adapters
-print("Loading Think model with LoRA adapters...")
+# Check for a Think LoRA adapter before loading a second full copy of the
+# base model, so we don't double VRAM usage when there is nothing to attach.
+print("Checking for Think LoRA adapter...")
 local_path = snapshot_download(MODEL_ID)
 think_dir = os.path.join(local_path, "think")
-
-model_think = AudioFlamingo3ForConditionalGeneration.from_pretrained(
-    MODEL_ID, torch_dtype=dtype, device_map="auto"
-)
 non_lora_path = os.path.join(think_dir, "non_lora_trainables.bin")
+
 if os.path.exists(non_lora_path):
+    print("Loading Think model with LoRA adapters...")
+    model_think = AudioFlamingo3ForConditionalGeneration.from_pretrained(
+        MODEL_ID, dtype=dtype, device_map="auto"
+    )
     non_lora_trainables = torch.load(non_lora_path, map_location="cpu", weights_only=False)
     model_think.load_state_dict(non_lora_trainables, strict=False)
     model_think = PeftModel.from_pretrained(model_think, local_path, subfolder="think")
