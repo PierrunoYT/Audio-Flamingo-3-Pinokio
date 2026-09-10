@@ -150,9 +150,7 @@ def transcribe_infer(audio_file):
         )
         outputs = model_single.generate(**inputs, max_new_tokens=500)
         decoded = processor.batch_decode(
-            outputs[:, inputs.input_ids.shape[1]:],
-            skip_special_tokens=True,
-            strip_prefix=True,
+            outputs[:, inputs.input_ids.shape[1]:], skip_special_tokens=True
         )
         return decoded[0] if decoded else "No transcription generated."
     except Exception as e:

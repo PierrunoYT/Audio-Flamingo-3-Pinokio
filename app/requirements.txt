@@ -1,8 +1,8 @@
 # Core
 gradio
 
-# Transformers (AF3 native support added Nov 2025)
-transformers>=4.47.0
+# Transformers (AudioFlamingo3 was added in 4.57.0)
+transformers>=4.57.0
 accelerate
 huggingface_hub
 peft
@@ -13,5 +13,4 @@ soundfile
 librosa
 
 # Compatibility
-protobuf==3.20.*
 numpy<2
