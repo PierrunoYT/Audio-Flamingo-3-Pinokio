@@ -2,6 +2,7 @@ import gradio as gr
 import torch
 import os
 import sys
+import threading
 from transformers import AudioFlamingo3ForConditionalGeneration, AutoProcessor
 from huggingface_hub import snapshot_download
 from peft import PeftModel
@@ -20,26 +21,6 @@ try:
     model_single = AudioFlamingo3ForConditionalGeneration.from_pretrained(
         MODEL_ID, dtype=dtype, device_map="auto"
     )
-
-    # Check for a Think LoRA adapter before loading a second full copy of the
-    # base model, so we don't double VRAM usage when there is nothing to attach.
-    print("Checking for Think LoRA adapter...")
-    local_path = snapshot_download(MODEL_ID)
-    think_dir = os.path.join(local_path, "think")
-    non_lora_path = os.path.join(think_dir, "non_lora_trainables.bin")
-
-    if os.path.exists(non_lora_path):
-        print("Loading Think model with LoRA adapters...")
-        model_think = AudioFlamingo3ForConditionalGeneration.from_pretrained(
-            MODEL_ID, dtype=dtype, device_map="auto"
-        )
-        non_lora_trainables = torch.load(non_lora_path, map_location="cpu", weights_only=True)
-        model_think.load_state_dict(non_lora_trainables, strict=False)
-        model_think = PeftModel.from_pretrained(model_think, local_path, subfolder="think")
-        print("Think model loaded successfully.")
-    else:
-        print("Warning: Think LoRA weights not found, using base model for think mode.")
-        model_think = model_single
 except Exception as e:
     print(f"FATAL: Failed to load Audio Flamingo 3 model: {e}")
     print(
@@ -48,7 +29,46 @@ except Exception as e:
     )
     sys.exit(1)
 
-print("Models loaded successfully!")
+print("Model loaded successfully!")
+
+# The Think model is a second full copy of the 7B weights, so it is loaded on
+# first use rather than at startup: that keeps the base model usable on GPUs
+# that cannot hold both copies, and skips the download/load entirely for users
+# who never open the Think tab.
+model_think = None
+_think_lock = threading.Lock()
+
+
+def get_think_model():
+    global model_think
+    if model_think is not None:
+        return model_think
+
+    with _think_lock:
+        if model_think is None:
+            print("Checking for Think LoRA adapter...")
+            local_path = snapshot_download(MODEL_ID)
+            non_lora_path = os.path.join(local_path, "think", "non_lora_trainables.bin")
+
+            if os.path.exists(non_lora_path):
+                print("Loading Think model with LoRA adapters...")
+                model = AudioFlamingo3ForConditionalGeneration.from_pretrained(
+                    MODEL_ID, dtype=dtype, device_map="auto"
+                )
+                non_lora_trainables = torch.load(
+                    non_lora_path, map_location="cpu", weights_only=True
+                )
+                model.load_state_dict(non_lora_trainables, strict=False)
+                model_think = PeftModel.from_pretrained(
+                    model, local_path, subfolder="think"
+                )
+                print("Think model loaded successfully.")
+            else:
+                print("Warning: Think LoRA weights not found, using base model for think mode.")
+                model_think = model_single
+
+    return model_think
+
 
 # ---------------------------------
 # INFERENCE FUNCTIONS
@@ -93,6 +113,7 @@ def think_infer(audio_file, prompt_text):
         return "❌ Please enter a prompt."
 
     try:
+        model = get_think_model()
         conversation = [
             {
                 "role": "user",
@@ -108,9 +129,9 @@ def think_infer(audio_file, prompt_text):
             tokenize=True,
             add_generation_prompt=True,
             return_dict=True,
-        ).to(model_think.device, dtype=model_think.dtype)
+        ).to(model.device, dtype=model.dtype)
 
-        outputs = model_think.generate(**inputs, max_new_tokens=1024)
+        outputs = model.generate(**inputs, max_new_tokens=1024)
         decoded = processor.batch_decode(
             outputs[:, inputs.input_ids.shape[1]:], skip_special_tokens=True
         )
