@@ -1,4 +1,4 @@
-# Pinokio generated files (venv at project root)
+# Pinokio generated files (venv lives at app/env)
 env/
 
 # Python
@@ -42,3 +42,8 @@ Thumbs.db
 
 # Crush
 .crush/
+# Agent / tooling scratch
+.claude/
+.codex/
+.gemini/
+.open-edit/

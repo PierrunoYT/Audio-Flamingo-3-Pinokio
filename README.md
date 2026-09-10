@@ -13,7 +13,7 @@
 2. Run **Install** once (PyTorch via `torch.js`, then Python packages from [`app/requirements.txt`](app/requirements.txt)).
 3. Run **Start**. When the UI is ready, use **Open Web UI** from the sidebar, or follow the URL shown in the terminal.
 
-**Reset** removes the `env` virtual environment. **Update** runs `git pull` and upgrades Python dependencies.
+**Reset** removes the `app/env` virtual environment. **Update** runs `git pull` and upgrades Python dependencies.
 
 ## Requirements and license
 

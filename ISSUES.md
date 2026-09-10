@@ -8,7 +8,7 @@ Migrated from the broken NVIDIA `llava`-based HF Space clone to the **native ðŸ¤
 - **Removed** git clone of `huggingface.co/spaces/PierrunoYT/audio-flamingo-3` â€” no longer needed
 - **Removed** DeepSpeed, triton, pytorchvideo, openai-whisper, and other legacy dependencies
 - **app.py** and **requirements.txt** live under **`app/`** (Gepeto layout); the app uses `nvidia/audio-flamingo-3-hf` via Transformers
-- **Pinokio scripts** use venv at `./env` in the project root; `shell.run` uses `path: "app"` for Python commands
+- **Pinokio scripts** use a venv at `app/env`; `shell.run` uses `venv: "env"` with `path: "app"` (Pinokio resolves `venv` relative to `path`)
 - Model downloads handled automatically by `huggingface_hub` / `transformers`
 
 ## Resolved Issues
