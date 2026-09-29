@@ -148,7 +148,9 @@ def transcribe_infer(audio_file):
         inputs = processor.apply_transcription_request(audio=audio_file).to(
             model_single.device, dtype=model_single.dtype
         )
-        outputs = model_single.generate(**inputs, max_new_tokens=500)
+        # Up to 10 minutes of speech is ~1500+ words, well past 500 tokens;
+        # generation still stops at EOS for shorter clips.
+        outputs = model_single.generate(**inputs, max_new_tokens=4096)
         decoded = processor.batch_decode(
             outputs[:, inputs.input_ids.shape[1]:], skip_special_tokens=True
         )
