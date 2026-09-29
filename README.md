@@ -18,6 +18,7 @@
 ## Requirements and license
 
 - A capable **NVIDIA GPU** is recommended for practical use; CPU may run but will be slow.
+- The **Think / Long Audio** tab loads a second full copy of the 7B model (plus a LoRA adapter) the first time it is used. On a 16GB GPU the two copies do not fit together, so part of the model is offloaded to system RAM and Think requests run much slower.
 - Model use is subject to NVIDIA’s **non-commercial research** terms; see the About tab in the UI and the model card on Hugging Face.
 - If the model weights are gated on Hugging Face, run `hf auth login` (or set the `HF_TOKEN` environment variable) inside the app's virtual environment before starting, otherwise model loading will fail on first run.
 
