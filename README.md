@@ -19,7 +19,7 @@
 
 - A capable **NVIDIA GPU** is recommended for practical use; CPU may run but will be slow.
 - Model use is subject to NVIDIA’s **non-commercial research** terms; see the About tab in the UI and the model card on Hugging Face.
-- If the model weights are gated on Hugging Face, run `huggingface-cli login` (or set the `HF_TOKEN` environment variable) inside the app's virtual environment before starting, otherwise model loading will fail on first run.
+- If the model weights are gated on Hugging Face, run `hf auth login` (or set the `HF_TOKEN` environment variable) inside the app's virtual environment before starting, otherwise model loading will fail on first run.
 
 ## Windows notes
 

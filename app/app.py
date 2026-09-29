@@ -24,7 +24,7 @@ try:
 except Exception as e:
     print(f"FATAL: Failed to load Audio Flamingo 3 model: {e}")
     print(
-        "If this model is gated on Hugging Face, run 'huggingface-cli login' "
+        "If this model is gated on Hugging Face, run 'hf auth login' "
         "(or set the HF_TOKEN environment variable) inside the app's env, then try again."
     )
     sys.exit(1)
