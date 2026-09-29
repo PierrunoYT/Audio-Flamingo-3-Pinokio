@@ -160,6 +160,9 @@ def transcribe_infer(audio_file):
 # ---------------------------------
 # GRADIO INTERFACE
 # ---------------------------------
+# Gradio limits concurrency per event listener, so without a shared
+# concurrency_id the three tabs could run generation (or the Think model's
+# lazy load) on the GPU at the same time and exhaust VRAM.
 with gr.Blocks(
     title="Audio Flamingo 3",
 ) as demo:
@@ -193,6 +196,7 @@ with gr.Blocks(
                 fn=single_turn_infer,
                 inputs=[audio_input_single, prompt_input_single],
                 outputs=output_single,
+                concurrency_id="gpu",
             )
 
         # ---------------- TRANSCRIPTION ----------------
@@ -210,6 +214,7 @@ with gr.Blocks(
                 fn=transcribe_infer,
                 inputs=[audio_input_transcribe],
                 outputs=output_transcribe,
+                concurrency_id="gpu",
             )
 
         # ---------------- THINK / LONG ----------------
@@ -232,6 +237,7 @@ with gr.Blocks(
                 fn=think_infer,
                 inputs=[audio_input_think, prompt_input_think],
                 outputs=output_think,
+                concurrency_id="gpu",
             )
 
         # ---------------- ABOUT ----------------
