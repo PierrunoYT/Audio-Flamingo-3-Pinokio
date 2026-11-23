@@ -1,8 +1,8 @@
-# Core
-gradio
+# Core (app.py passes css to launch(), which Gradio 5 rejects)
+gradio>=6.0
 
-# Transformers (AudioFlamingo3 was added in 4.57.0)
-transformers>=4.57.0
+# Transformers (AudioFlamingo3 first shipped in 5.0.0; no 4.57.x release has it)
+transformers>=5.0.0
 accelerate
 huggingface_hub
 peft
