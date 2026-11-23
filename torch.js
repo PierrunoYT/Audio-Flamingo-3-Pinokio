@@ -17,19 +17,15 @@ module.exports = {
       "next": null
     },
     // windows amd
-    // NOTE: torch-directml (Microsoft, maintenance mode) historically lags far
-    // behind mainline PyTorch releases and only supports specific older torch
-    // versions. torch/torchaudio/torchvision are left unpinned here because the
-    // exact currently-compatible versions are not confirmed; if install fails,
-    // check https://github.com/microsoft/DirectML for the torch version that
-    // matches the resolved torch-directml release and pin it explicitly.
+    // No GPU build: torch-directml can't run this model (no bf16, and many of
+    // the ops generate() needs are unsupported), so AMD on Windows uses CPU.
     {
       "when": "{{platform === 'win32' && gpu === 'amd'}}",
       "method": "shell.run",
       "params": {
         "venv": "{{args && args.venv ? args.venv : null}}",
         "path": "{{args && args.path ? args.path : '.'}}",
-        "message": "uv pip install torch-directml torchaudio torchvision numpy==1.26.4"
+        "message": "uv pip install torch==2.7.0 torchvision==0.22.0 torchaudio==2.7.0 --index-url https://download.pytorch.org/whl/cpu"
       },
       "next": null
     },

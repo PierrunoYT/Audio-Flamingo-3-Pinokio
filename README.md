@@ -17,15 +17,14 @@
 
 ## Requirements and license
 
-- A capable **NVIDIA GPU** is recommended for practical use; CPU may run but will be slow.
-- The **Think / Long Audio** tab loads a second full copy of the 7B model (plus a LoRA adapter) the first time it is used. On a 16GB GPU the two copies do not fit together, so part of the model is offloaded to system RAM and Think requests run much slower.
+- A capable **NVIDIA GPU** is recommended for practical use. Apple Silicon Macs run the model on the GPU via MPS (32GB+ unified memory recommended). Without a GPU it runs on the CPU in bfloat16 (~16GB RAM), which works but is slow. Set `AF3_DTYPE=float32` for full precision at twice the memory.
+- The **Think / Long Audio** tab loads a second full copy of the 7B model (plus a LoRA adapter) the first time it is used. It is assembled in system RAM first (~16GB free RAM needed), then moved to whatever GPU memory is left; on a 16GB GPU the two copies do not fit together, so the rest stays in system RAM and Think requests run much slower. If that load or a request runs out of memory, the app frees it and the other tabs keep working.
 - Model use is subject to NVIDIA’s **non-commercial research** terms; see the About tab in the UI and the model card on Hugging Face.
 - If the model weights are gated on Hugging Face, run `hf auth login` (or set the `HF_TOKEN` environment variable) inside the app's virtual environment before starting, otherwise model loading will fail on first run.
 
 ## Windows notes
 
-- NVIDIA GPUs use the standard CUDA wheels; AMD GPUs fall back to `torch-directml`, which lags behind mainline PyTorch releases — if install fails on an AMD GPU, see the version-pinning note in [`torch.js`](torch.js).
-- No CPU-only fallback beyond the default `torch.js` CPU branch is provided; a 7B-parameter model will be very slow without a GPU.
+- NVIDIA GPUs use the standard CUDA wheels. AMD GPUs are not supported on Windows (DirectML cannot run this model), so they get the CPU build; a 7B-parameter model will be very slow without a GPU. On Linux, AMD GPUs use the ROCm build.
 
 ## Programmatic access
 
